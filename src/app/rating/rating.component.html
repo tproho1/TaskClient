@@ -1,0 +1,24 @@
+
+<accordion [isAnimated]="true" *ngFor='let movie of movies' >
+    <accordion-group heading={{movie.title}}>
+      <div class="container">
+        <h5>Current rating of this film is: </h5>
+        <rating [max]="5" [(ngModel)]="movie.ratings" [customTemplate]="tt" [readonly]="true"></rating> 
+        <hr>
+        <div>
+          <rating [max]="5" [(ngModel)]="y" [customTemplate]="tt" ></rating>
+        
+          <ng-template #tt let-i="index" let-v="value">
+            <button class="btn btn-{{i < v ? 'warning' : 'default'}}">
+              {{i < v ? '&#9733;' : '&#9734;'}}
+            </button>
+            
+          </ng-template>
+          <button class="btn btn-outline-warning" (click)='sendRating(movie.id, y)'>Rate it!</button>
+        </div>
+      </div>
+     
+    </accordion-group>
+</accordion> 
+
+  

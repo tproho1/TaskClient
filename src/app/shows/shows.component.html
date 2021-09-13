@@ -1,0 +1,27 @@
+<accordion [isAnimated]="true" *ngFor='let movie of showedMovies'>
+  <accordion-group heading={{movie.title}}>
+      <div class="card mb-3 text-dark bg-light ">
+          <div class="row g-0">
+            <div class="col-md-4">
+              <img src="../assets/thumbnail.jpg" class="img-fluid rounded-start" alt="..." style="width: 100%; max-width: 540px;">
+            </div>
+            <div class="col-md-8">
+              <div class="card-body">
+                <h5 class="card-title">{{movie.title}}</h5>
+                <p class="card-text">
+                  {{movie.description}}
+                  
+                  <br/>Cast:
+                  <br/><small *ngFor='let actor of movie.actors'>{{actor.firstName}} {{actor.lastName}}<br/></small>
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+  </accordion-group>
+ </accordion> 
+
+<br/>
+
+<div class="container"><button class="col col-lg btn btn-outline-primary btn-lg" type="button" (click) = 'toggleMovies()'>Load more results</button> </div>
+  
