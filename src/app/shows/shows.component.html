@@ -1,18 +1,18 @@
-<accordion [isAnimated]="true" *ngFor='let movie of showedMovies'>
-  <accordion-group heading={{movie.title}}>
+<accordion [isAnimated]="true" *ngFor='let show of showedShows'>
+  <accordion-group heading={{show.title}}>
       <div class="card mb-3 text-dark bg-light ">
           <div class="row g-0">
             <div class="col-md-4">
-              <img src="../assets/thumbnail.jpg" class="img-fluid rounded-start" alt="..." style="width: 100%; max-width: 540px;">
+              <img src="http://localhost:5000/api/images?pieceId={{show.id}}" class="img-fluid rounded-start" alt="..." style="width: 100%; max-width: 540px;">
             </div>
             <div class="col-md-8">
               <div class="card-body">
-                <h5 class="card-title">{{movie.title}}</h5>
+                <h5 class="card-title">{{show.title}}</h5>
                 <p class="card-text">
-                  {{movie.description}}
+                  {{show.description}}
                   
                   <br/>Cast:
-                  <br/><small *ngFor='let actor of movie.actors'>{{actor.firstName}} {{actor.lastName}}<br/></small>
+                  <br/><small *ngFor='let actor of show.actors'>{{actor.firstName}} {{actor.lastName}}<br/></small>
                 </p>
               </div>
             </div>
@@ -23,5 +23,5 @@
 
 <br/>
 
-<div class="container"><button class="col col-lg btn btn-outline-primary btn-lg" type="button" (click) = 'toggleMovies()'>Load more results</button> </div>
-  
+<div class="container"><button class="col col-lg btn btn-outline-primary btn-lg" type="button" (click) = 'toggleShows()'>Load more results</button> </div>
+<br/> <br/> <br/>

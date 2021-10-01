@@ -1,7 +1,7 @@
 import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { Subscription } from 'rxjs';
-import { IMovie } from '../_Interfaces/movies';
-import { MoviesService } from '../_services/movies.service';
+import { IShow } from '../_interfaces/shows';
+import { ShowsService } from '../_services/show.service';
 
 @Component({
   selector: 'app-shows',
@@ -11,9 +11,9 @@ import { MoviesService } from '../_services/movies.service';
 export class ShowsComponent implements OnInit {
   errorMessage: string = '';
   sub!: Subscription ;
-  movies: IMovie[] = [];
-  filteredMovies: IMovie[] = [];
-  showedMovies: IMovie[] = [];
+  shows: IShow[] = [];
+  fitleredShows: IShow[] = [];
+  showedShows: IShow[] = [];
   counter : number = 1;
 
    _filterString?: string = '';
@@ -22,32 +22,32 @@ export class ShowsComponent implements OnInit {
   @Input() set filterString(value: string){
     this._filterString = value;
     if(value.length< 2)
-      this.showedMovies = this.movies.slice(0,10);
-    else this.showedMovies = this.preformFilter(value);
+      this.showedShows = this.shows.slice(0,10);
+    else this.showedShows = this.preformFilter(value);
   }
 
-  constructor(private moviesService : MoviesService) { }
+  constructor(private showsService : ShowsService) { }
 
   ngOnInit(): void {
-    this.loadMovies();
+    this.loadShows();
   }
 
-  toggleMovies(){
+  toggleShows(){
     this.counter++;
-    for(var m of this.movies){
-        if(this.movies.indexOf(m) >= this.counter*10)break;
-        if(this.movies.indexOf(m) < (this.counter-1)*10)continue;
-        else this.showedMovies.push(m);
+    for(var m of this.shows){
+        if(this.shows.indexOf(m) >= this.counter*10)break;
+        if(this.shows.indexOf(m) < (this.counter-1)*10)continue;
+        else this.showedShows.push(m);
       }
   }
 
-  loadMovies(){
-    this.moviesService.getMovies().subscribe(movies =>{ this.movies = movies; this.showedMovies = movies.slice(0,10)});
+  loadShows(){
+    this.showsService.getShows().subscribe(shows =>{ this.shows = shows; this.showedShows = shows.slice(0,10)});
   }
 
-  preformFilter(filterBy: string) : IMovie[]{
+  preformFilter(filterBy: string) : IShow[]{
     filterBy = filterBy.toLocaleLowerCase();
-    return this.movies.filter((movie : IMovie) => movie.title.toLocaleLowerCase().includes(filterBy) || movie.description.toLocaleLowerCase().includes(filterBy))
+    return this.shows.filter((shows : IShow) => shows.title.toLocaleLowerCase().includes(filterBy) || shows.description.toLocaleLowerCase().includes(filterBy))
     .sort((a,b) => a.ratings-b.ratings);
   }
 }

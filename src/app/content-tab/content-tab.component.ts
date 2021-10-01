@@ -11,6 +11,7 @@ export class ContentTabComponent implements OnInit {
   value?:string;
   selected?: string = '';
   states: string[] = [];
+  shouldReset:boolean = true;
 
   _filterString: string = '';
   
@@ -23,15 +24,11 @@ export class ContentTabComponent implements OnInit {
      console.log(value);
      
   }
-
-onSelect(data: TabDirective): void {
-  this.value = data.heading;
-}
-
   constructor() { }
 
   ngOnInit(): void {
     this._filterString = '';
   }
+
 
 }

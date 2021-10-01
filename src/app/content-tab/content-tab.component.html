@@ -9,9 +9,7 @@
     
   <br/>
     <tabset [justified]="true">
-      <tab heading="Top 10 Movies" (selectTab)="onSelect($event)"><app-movies  [filterString]='filterString'></app-movies></tab>
-      <tab heading="Top 10 Shows" (selectTab)="onSelect($event)"><app-shows  [filterString]='filterString'></app-shows></tab>
-      <tab heading="Rate Movies" (selectTab)="onSelect($event)"><app-rating></app-rating></tab>
-      <tab heading="Rate Shows" (selectTab)="onSelect($event)"><app-rating></app-rating></tab>
+      <tab heading="Top 10 Movies" ><app-movies  [filterString]='filterString'></app-movies></tab>
+      <tab heading="Top 10 Shows" ><app-shows  [filterString]='filterString'></app-shows></tab>
     </tabset>
   </div>
