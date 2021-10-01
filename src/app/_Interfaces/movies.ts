@@ -1,5 +1,5 @@
 import { IActor } from "./actors";
-import { IRating } from "./ratings";
+
 
 export interface IMovie{
     id: string;
@@ -8,5 +8,4 @@ export interface IMovie{
     releaseDate: Date;
     actors: IActor[];
     ratings: number;
-    coverImage: Blob;
 }

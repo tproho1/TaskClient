@@ -1,6 +1,8 @@
 import { Component, Input, OnDestroy, OnInit } from '@angular/core';
+import { DomSanitizer } from '@angular/platform-browser';
 import { Subscription } from 'rxjs';
-import { IMovie } from '../_Interfaces/movies';
+import { IMovie } from '../_interfaces/movies';
+import { ImagesService } from '../_services/images.service';
 import { MoviesService } from '../_services/movies.service';
 
 @Component({
@@ -24,21 +26,15 @@ export class MoviesComponent implements OnInit {
     if(value.length< 2)
       this.showedMovies = this.movies.slice(0,10);
     else this.showedMovies = this.preformFilter(value);
-    for(var m of this.showedMovies){
-      this.moviesService.download(m.title).subscribe((response:any) =>{ m.coverImage = response.Blob; console.log(m.coverImage)});
-    }
   }
 
-  constructor(private moviesService : MoviesService) { }
+  constructor(private moviesService : MoviesService, private imagesService : ImagesService, private sanitizer : DomSanitizer) { }
 
   ngOnInit(): void {
     this.loadMovies();
-    
-    
   }
 
   toggleMovies(){
-    
     this.counter++;
     for(var m of this.movies){
         if(this.movies.indexOf(m) >= this.counter*10)break;
@@ -48,8 +44,14 @@ export class MoviesComponent implements OnInit {
   }
 
   loadMovies(){
-    this.moviesService.getMovies().subscribe(movies =>{ this.movies = movies; this.showedMovies = movies.slice(0,10)});
-    
+    this.moviesService.getMovies()
+      .subscribe(movies =>{ 
+        this.movies = movies; 
+        this.showedMovies = movies.slice(0,10);
+      },
+      (error) => {
+        this.errorMessage = error;
+      });  
   }
 
   preformFilter(filterBy: string) : IMovie[]{
@@ -58,5 +60,12 @@ export class MoviesComponent implements OnInit {
     .sort((a,b) => a.ratings-b.ratings).reverse();
   }
 
-
+  getImage(title:string){
+    let reader = new FileReader();
+    let image = this.imagesService.getMovieImage(title).subscribe(res => {
+      reader.readAsDataURL(res);
+      
+      })
+     return image; 
+    }
 }
